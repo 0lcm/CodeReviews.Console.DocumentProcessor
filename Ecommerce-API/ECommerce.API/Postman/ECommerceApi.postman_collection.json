@@ -1,0 +1,1880 @@
+{
+	"info": {
+		"_postman_id": "95317eb1-2d5f-447c-a306-88b644a584a3",
+		"name": "ECommerce API",
+		"description": "This API features 'Items' which are the products being sold, 'Tags' which are the description tags attached to items, and 'Sales' which are the recorded sales. Each category features Get, Post, and Delete requests. Any deletion requests are handled by the API and are turned into soft deletes to keep previous records viable, and to allow the object itself to be restored manually if it needs to be. All soft deleted objects are hidden from any Get requests, or any requests that query the database.\n\nThe base Url for the API is set to localhost port 7204, but can be changed based on individual needs.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Get Items",
+					"id": "3796c0ee-a1d2-40a4-a603-afff495b6c1e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/api/Items",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"Items"
+							],
+							"query": [
+								{
+									"key": "PageNumber",
+									"value": "",
+									"description": "Specifies which page to return, defautls to the first page.",
+									"disabled": true
+								},
+								{
+									"key": "PageSize",
+									"value": "",
+									"description": "Defines how many items can be shown on one page, max is 50.",
+									"disabled": true
+								},
+								{
+									"key": "SearchTerm",
+									"value": "",
+									"description": "Filters results based on the search term.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Genre",
+									"value": "",
+									"description": "Filters results to only show items that match the given genre.",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Returns a paginated response of items taken from the database and then paginated and/or filtered according to the parameters passed from the query. If no pagination parameters are passed through the request will always default to the first page, with a page size of 10.\n\nThe search term parameter filters the results based on if the items name or artist fields contain the search term, however it does not support searching by tags. The genre parameter filters results to only contain items that match the parameter.\n\nReturns an expected 200 OK containing the paged response after a successful request, or else a 404 NotFound is expected if no results are returned."
+					},
+					"response": [
+						{
+							"id": "77a63230-08a0-4edd-8b4c-953ed8daed4e",
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Items",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Items"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": null,
+											"description": "Specifies which page to return, defautls to the first page.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "PageSize",
+											"value": null,
+											"description": "Defines how many items can be shown on one page, max is 50.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "SearchTerm",
+											"value": null,
+											"description": "Filters results based on the search term.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "Genre",
+											"value": null,
+											"description": "Filters results to only show items that match the given genre.",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 09 Apr 2026 23:31:56 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"itemId\": 1,\n            \"format\": \"Vinyl\",\n            \"type\": \"Album\",\n            \"name\": \"Good Kid, m.A.A.d City (10th Anniversary Edition)\",\n            \"artist\": \"Kendrick Lamar\",\n            \"price\": 38,\n            \"genre\": \"Hip-Hop\",\n            \"tags\": [\n                {\n                    \"tagName\": \"West Coast hip-hop\"\n                },\n                {\n                    \"tagName\": \"Conscious rap\"\n                }\n            ]\n        },\n        {\n            \"itemId\": 2,\n            \"format\": \"Vinyl\",\n            \"type\": \"Album\",\n            \"name\": \"The Miseducation of Lauryn Hill\",\n            \"artist\": \"Lauryn Hill\",\n            \"price\": 29.98,\n            \"genre\": \"Neo Soul\",\n            \"tags\": [\n                {\n                    \"tagName\": \"Female empowerment\"\n                },\n                {\n                    \"tagName\": \"Heartbreak\"\n                }\n            ]\n        }\n    ],\n    \"pageNumber\": 1,\n    \"pageSize\": 10,\n    \"totalRecords\": 2\n}"
+						},
+						{
+							"id": "0f53e687-1ab3-4819-9df5-e18fc5ae666e",
+							"name": "404 NotFound",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Items?SearchTerm=404 Not Found",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Items"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": null,
+											"description": "Specifies which page to return, defautls to the first page.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "PageSize",
+											"value": null,
+											"description": "Defines how many items can be shown on one page, max is 50.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "SearchTerm",
+											"value": "404 Not Found",
+											"description": "Filters results based on the search term.",
+											"type": "text"
+										},
+										{
+											"key": "Genre",
+											"value": "",
+											"description": "Filters results to only show items that match the given genre.",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 404
+								},
+								{
+									"key": "content-type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 09 Apr 2026 23:38:07 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-ce9d269cf9708bda6ce731ccd3f514a3-4c3c256d11a85800-00\"\n}"
+						},
+						{
+							"id": "44229407-ef6b-4c99-bae3-593fed5fa491",
+							"name": "Filtered response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Items?SearchTerm=Kendrick lamar",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Items"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": null,
+											"description": "Specifies which page to return, defautls to the first page.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "PageSize",
+											"value": null,
+											"description": "Defines how many items can be shown on one page, max is 50.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "SearchTerm",
+											"value": "Kendrick lamar",
+											"description": "Filters results based on the search term.",
+											"type": "text"
+										},
+										{
+											"key": "Genre",
+											"value": "",
+											"description": "Filters results to only show items that match the given genre.",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 09 Apr 2026 23:37:18 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"itemId\": 1,\n            \"format\": \"Vinyl\",\n            \"type\": \"Album\",\n            \"name\": \"Good Kid, m.A.A.d City (10th Anniversary Edition)\",\n            \"artist\": \"Kendrick Lamar\",\n            \"price\": 38,\n            \"genre\": \"Hip-Hop\",\n            \"tags\": [\n                {\n                    \"tagName\": \"West Coast hip-hop\"\n                },\n                {\n                    \"tagName\": \"Conscious rap\"\n                }\n            ]\n        }\n    ],\n    \"pageNumber\": 1,\n    \"pageSize\": 10,\n    \"totalRecords\": 1\n}"
+						},
+						{
+							"id": "063173b4-628b-4602-92fc-2cb27e711b7e",
+							"name": "Paginated response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Items?PageNumber=2&PageSize=1",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Items"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": "2",
+											"description": "Specifies which page to return, defautls to the first page.",
+											"type": "text"
+										},
+										{
+											"key": "PageSize",
+											"value": "1",
+											"description": "Defines how many items can be shown on one page, max is 50.",
+											"type": "text"
+										},
+										{
+											"key": "SearchTerm",
+											"value": "",
+											"description": "Filters results based on the search term.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "Genre",
+											"value": "",
+											"description": "Filters results to only show items that match the given genre.",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 09 Apr 2026 23:39:23 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"itemId\": 2,\n            \"format\": \"Vinyl\",\n            \"type\": \"Album\",\n            \"name\": \"The Miseducation of Lauryn Hill\",\n            \"artist\": \"Lauryn Hill\",\n            \"price\": 29.98,\n            \"genre\": \"Neo Soul\",\n            \"tags\": [\n                {\n                    \"tagName\": \"Female empowerment\"\n                },\n                {\n                    \"tagName\": \"Heartbreak\"\n                }\n            ]\n        }\n    ],\n    \"pageNumber\": 2,\n    \"pageSize\": 1,\n    \"totalRecords\": 2\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Item By ID",
+					"id": "4ff80a25-4a50-4faa-a9ac-2a49504b7fef",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/api/Items/:id",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"Items",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Gets a specific item by an item ID. Expects a 200 OK containing the item, or a 404 NotFound response."
+					},
+					"response": [
+						{
+							"id": "de509c46-b4a1-4165-b26b-1daf677455f2",
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Items/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Items",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 16 Apr 2026 07:54:48 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"itemId\": 0,\n    \"format\": \"Vinyl\",\n    \"type\": \"Album\",\n    \"name\": \"Good Kid, m.A.A.d City (10th Anniversary Edition)\",\n    \"artist\": \"Kendrick Lamar\",\n    \"price\": 38,\n    \"genre\": \"Hip-Hop\",\n    \"tags\": [\n        {\n            \"tagName\": \"West Coast hip-hop\"\n        },\n        {\n            \"tagName\": \"Conscious rap\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "2bca7fe6-b00c-4748-b034-4cd2cab4c1c0",
+							"name": "404 NotFound",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Items/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Items",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "999"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 404
+								},
+								{
+									"key": "content-type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 16 Apr 2026 07:55:07 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-8f0cd1cfe1d341dba36e132074e81f2f-b60512301a66d50e-00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Post Item",
+					"id": "88dbe39a-d005-4ada-9125-9a66395b4537",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"format\": \"Cd\",\r\n  \"type\": \"Album\",\r\n  \"name\": \"string\",\r\n  \"artist\": \"string\",\r\n  \"price\": 0,\r\n  \"genre\": \"string\",\r\n  \"tags\": [\r\n    {\r\n      \"tagName\": \"string\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/api/items",
+						"description": "Posts an item based on the JSON provided in the body.\n\n- Format can be: Cd, Vinyl, Digital.\n    \n- Type can be Album, Single, Mixtape.\n    \n- Name, Artist, and Genre are basic strings.\n    \n- Price is a decimal type, and supports decimals\n    \n- Tags is a list of tags, which are linked to items through a many to many relationship, and contains a TagName variable.\n    \n\nReturns an expected 201 Created after a successful creation, or a 400 BadRequest or 500 Internal Server Error status."
+					},
+					"response": [
+						{
+							"id": "e32303ad-eb0a-4574-bd87-3ed14d5cac86",
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"format\": \"Cd\",\r\n  \"type\": \"Album\",\r\n  \"name\": \"The Romantic\",\r\n  \"artist\": \"Bruno Mars\",\r\n  \"price\": 14.98,\r\n  \"genre\": \"R&B\",\r\n  \"tags\": [\r\n    {\r\n      \"tagName\": \"Romantic\"\r\n    },\r\n    {\r\n        \"tagName\": \"Emotional\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/api/items"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 201
+								},
+								{
+									"key": "date",
+									"value": "Thu, 09 Apr 2026 23:57:40 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "content-length",
+									"value": "0"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						},
+						{
+							"id": "bec668b8-150a-4562-a41c-584785f1df2f",
+							"name": "400 BadRequest",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"format\": \"Live concert\",\r\n  \"type\": \"Concert\",\r\n  \"name\": \"The Romantic\",\r\n  \"artist\": \"Bad Bunny\",\r\n  \"price\": 122.80,\r\n  \"genre\": \"Reggaeton\",\r\n  \"tags\": [\r\n    {\r\n      \"tagName\": \"Latin Trap\"\r\n    },\r\n    {\r\n        \"tagName\": \"Latin Pop\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/api/items"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 400
+								},
+								{
+									"key": "content-type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Fri, 10 Apr 2026 00:04:21 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"itemDto\": [\n            \"The itemDto field is required.\"\n        ],\n        \"$.format\": [\n            \"The JSON value could not be converted to ECommerce.Shared.ItemFormat. Path: $.format | LineNumber: 1 | BytePositionInLine: 26.\"\n        ]\n    },\n    \"traceId\": \"00-6b4667926ecdb776119933530b730dde-1db86ba7c6490507-00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Item",
+					"id": "00294314-fb62-4daa-807b-cdef5f52a96b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/api/Items/:id",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"Items",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Soft deletes an item, marking it as deleted and hiding it from all get requests while keeping records viable. Takes an item ID integer to define which item to delete.\n\nReturns a 201 NoContent status code upon a successful deletion, or else a 404 NotFound or 500 Internal Server Error status upon an unsuccessful attempt."
+					},
+					"response": [
+						{
+							"id": "ebcd9e84-d6e1-4aba-9179-8e1a2a5a025b",
+							"name": "204 NoContent",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Items/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Items",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 204
+								},
+								{
+									"key": "date",
+									"value": "Mon, 20 Apr 2026 10:42:08 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						},
+						{
+							"id": "399f1977-6902-4957-865c-128e4777f64d",
+							"name": "404 NotFound",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Items/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Items",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "999"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 404
+								},
+								{
+									"key": "content-type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Mon, 20 Apr 2026 10:42:23 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-6d6b78edb93b0b207c91bf694cf3ce52-a21e5d2ba1388128-00\"\n}"
+						}
+					]
+				}
+			],
+			"id": "df95d7aa-d9a0-499a-9d86-233203865d48",
+			"description": "This folder stores the requests to the API involving the products of the E-Commerce site, featuring Post, Get, and Delete requests."
+		},
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "Get Tag",
+					"id": "0f8c0c81-d85c-47a3-a148-4eecbc07b44e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/api/Tags",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"Tags"
+							],
+							"query": [
+								{
+									"key": "PageNumber",
+									"value": "",
+									"description": "Specifies which page to return, defautls to the first page.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "PageSize",
+									"value": "",
+									"description": "Defines how many items can be shown on one page, max is 50.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "SearchTerm",
+									"value": "",
+									"description": "Filters results based on the search term.",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Returns a paginated response of tags taken from the database and then paginated and/or filtered according to the parameters passed from the query. If no pagination parameters are passed through the request will always default to the first page, with a page size of 10.\n\nThe search term parameter filters the results based on if tag name contains the search term.\n\nExpects a return of 200 OK containing the paged response, or else 404 NotFound if no results we're returned."
+					},
+					"response": [
+						{
+							"id": "7046c183-1c3d-4b52-8100-40f87fc70139",
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Tags",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Tags"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": "",
+											"description": "Specifies which page to return, defautls to the first page.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "PageSize",
+											"value": "",
+											"description": "Defines how many items can be shown on one page, max is 50.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "SearchTerm",
+											"value": "",
+											"description": "Filters results based on the search term.",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Fri, 10 Apr 2026 00:15:12 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"tagName\": \"Conscious rap\"\n        },\n        {\n            \"tagName\": \"Emotional\"\n        },\n        {\n            \"tagName\": \"Female empowerment\"\n        },\n        {\n            \"tagName\": \"Heartbreak\"\n        },\n        {\n            \"tagName\": \"Romantic\"\n        },\n        {\n            \"tagName\": \"West Coast hip-hop\"\n        }\n    ],\n    \"pageNumber\": 1,\n    \"pageSize\": 10,\n    \"totalRecords\": 6\n}"
+						},
+						{
+							"id": "fb9cf5df-7277-4f4b-a926-58a609731a57",
+							"name": "404 NotFound",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Tags?SearchTerm=404 NotFound",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Tags"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": "",
+											"description": "Specifies which page to return, defautls to the first page.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "PageSize",
+											"value": "",
+											"description": "Defines how many items can be shown on one page, max is 50.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "SearchTerm",
+											"value": "404 NotFound",
+											"description": "Filters results based on the search term.",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 404
+								},
+								{
+									"key": "content-type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Fri, 10 Apr 2026 00:16:31 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-a3e47d2ade03b78de9c94146e7983f1e-fb1420600a7af10a-00\"\n}"
+						},
+						{
+							"id": "929208a1-7ca7-43dc-8efb-168fb5728199",
+							"name": "Filtered response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Tags?SearchTerm=romantic",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Tags"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": "",
+											"description": "Specifies which page to return, defautls to the first page.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "PageSize",
+											"value": "",
+											"description": "Defines how many items can be shown on one page, max is 50.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "SearchTerm",
+											"value": "romantic",
+											"description": "Filters results based on the search term.",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Fri, 10 Apr 2026 00:18:08 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"tagName\": \"Romantic\"\n        }\n    ],\n    \"pageNumber\": 1,\n    \"pageSize\": 10,\n    \"totalRecords\": 1\n}"
+						},
+						{
+							"id": "6bf97e42-890f-4ac8-9b4c-923e8ae8466e",
+							"name": "Paginated response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Tags?PageNumber=2&PageSize=2",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Tags"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": "2",
+											"description": "Specifies which page to return, defautls to the first page.",
+											"type": "text"
+										},
+										{
+											"key": "PageSize",
+											"value": "2",
+											"description": "Defines how many items can be shown on one page, max is 50.",
+											"type": "text"
+										},
+										{
+											"key": "SearchTerm",
+											"value": "",
+											"description": "Filters results based on the search term.",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Fri, 10 Apr 2026 00:19:10 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"tagName\": \"Female empowerment\"\n        },\n        {\n            \"tagName\": \"Heartbreak\"\n        }\n    ],\n    \"pageNumber\": 2,\n    \"pageSize\": 2,\n    \"totalRecords\": 6\n}"
+						}
+					]
+				},
+				{
+					"name": "Post Tag",
+					"id": "a7b59901-dbda-4a05-9643-016abb1b10a1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tagName\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/api/Tags",
+						"description": "Posts an item based on the JSON provided in the body.\n\n- Tag name is a string and represents the name given to the tag.\n    \n\nUpon a successful creation the request expects a return of a 201 Created status code, or possibly a 404 BadRequest."
+					},
+					"response": [
+						{
+							"id": "e1cffd7b-8214-4430-99ee-4c0a47fbbdb2",
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"tagName\": \"Test tag\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/api/Tags"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 201
+								},
+								{
+									"key": "date",
+									"value": "Fri, 10 Apr 2026 00:25:30 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "content-length",
+									"value": "0"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Delete Tag",
+					"id": "8b0d2fdc-a006-4866-958e-6bf0a8940dc5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/api/Tags/:id",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"Tags",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Soft deletes a tag, hiding it from any Get requests while protecting it within the database and keeping past records viable.\n\nTakes an integer tag ID to determine which object to delete.\n\nExpects a 204 NoContent return upon a successful deletion request, or either a 404 NotFound, or 500 Internal Serverr Error status code upon an unsuccessful attempt."
+					},
+					"response": [
+						{
+							"id": "40e36275-1227-4764-a701-9e6b9c5dc266",
+							"name": "204 NoContent",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Tags/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Tags",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "13"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 204
+								},
+								{
+									"key": "date",
+									"value": "Mon, 20 Apr 2026 11:02:55 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						},
+						{
+							"id": "4e407965-00d3-429f-b937-606730a74e31",
+							"name": "404 NotFound",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Tags/:id",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Tags",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "999"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 404
+								},
+								{
+									"key": "content-type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Mon, 20 Apr 2026 11:03:11 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-d2b8b0df0ddab0649ac8a20aac9cd83f-4e0370a2b8aa0df3-00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Tag ID",
+					"id": "f38e4fc0-6e1b-4be2-8e8e-f88e36905c19",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/api/tags/:name",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "",
+									"description": "The name of the tag for which to get the ID"
+								}
+							]
+						},
+						"description": "Returns a tag's ID value after searching the database for the tag via the tag name, passed through as a parameter. Expects a 200 OK containing the ID value, or a 404 NotFound response status code."
+					},
+					"response": [
+						{
+							"id": "e4104432-9171-4fc9-996f-216d2e09b4bd",
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/tags/:name",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"tags",
+										":name"
+									],
+									"variable": [
+										{
+											"key": "name",
+											"value": "Heartbreak",
+											"description": "The name of the tag for which to get the ID"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Sat, 18 Apr 2026 15:43:23 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "4"
+						},
+						{
+							"id": "ab6ed250-2604-4435-a691-283653fe1bcd",
+							"name": "404 NotFound",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/tags/:name",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"tags",
+										":name"
+									],
+									"variable": [
+										{
+											"key": "name",
+											"value": "unknown value",
+											"description": "The name of the tag for which to get the ID"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 404
+								},
+								{
+									"key": "content-type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Sat, 18 Apr 2026 15:43:47 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-7b313b2048c3221dcd548b7e2ec28311-1badc791e401cf13-00\"\n}"
+						}
+					]
+				}
+			],
+			"id": "3716f07a-32c1-481e-9912-d6251ea9a220",
+			"description": "This folder contains API requests directed at the tags, including Get, Post, and Delete functions."
+		},
+		{
+			"name": "Sales",
+			"item": [
+				{
+					"name": "Get Sales",
+					"id": "607ef220-0c9c-4df9-b3d8-d53a33e4c3e5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/api/Sales?PageNumber=1&PageSize=10",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"Sales"
+							],
+							"query": [
+								{
+									"key": "PageNumber",
+									"value": "1",
+									"description": "Specifies which page to return, defautls to the first page."
+								},
+								{
+									"key": "PageSize",
+									"value": "10",
+									"description": "Defines how many items can be shown on one page, max is 50."
+								}
+							]
+						},
+						"description": "Sends a Get request with the pagination parameters:\n\n- Page Number, determining what page you're requesting.\n    \n- Page Size, defines how many items to display per page, with 50 being the max.\n    \n\nThis request expects a returned status code of 200 OK, containing the paginated response of sales."
+					},
+					"response": [
+						{
+							"id": "66c42b55-36c3-4aa6-b77a-4985020bf991",
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Sales",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Sales"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": "",
+											"description": "Specifies which page to return, defautls to the first page.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "PageSize",
+											"value": "",
+											"description": "Defines how many items can be shown on one page, max is 50.",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Sun, 12 Apr 2026 00:03:51 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"saleId\": 6,\n            \"soldItems\": [\n                {\n                    \"quantity\": 1,\n                    \"item\": {\n                        \"itemId\": 1,\n                        \"format\": \"Vinyl\",\n                        \"type\": \"Album\",\n                        \"name\": \"Good Kid, m.A.A.d City (10th Anniversary Edition)\",\n                        \"artist\": \"Kendrick Lamar\",\n                        \"price\": 38,\n                        \"genre\": \"Hip-Hop\",\n                        \"tags\": [\n                            {\n                                \"tagName\": \"West Coast hip-hop\"\n                            },\n                            {\n                                \"tagName\": \"Conscious rap\"\n                            }\n                        ]\n                    }\n                }\n            ],\n            \"totalPrice\": 38\n        },\n        {\n            \"saleId\": 7,\n            \"soldItems\": [\n                {\n                    \"quantity\": 2,\n                    \"item\": {\n                        \"itemId\": 1,\n                        \"format\": \"Vinyl\",\n                        \"type\": \"Album\",\n                        \"name\": \"Good Kid, m.A.A.d City (10th Anniversary Edition)\",\n                        \"artist\": \"Kendrick Lamar\",\n                        \"price\": 38,\n                        \"genre\": \"Hip-Hop\",\n                        \"tags\": [\n                            {\n                                \"tagName\": \"West Coast hip-hop\"\n                            },\n                            {\n                                \"tagName\": \"Conscious rap\"\n                            }\n                        ]\n                    }\n                },\n                {\n                    \"quantity\": 1,\n                    \"item\": {\n                        \"itemId\": 2,\n                        \"format\": \"Vinyl\",\n                        \"type\": \"Album\",\n                        \"name\": \"The Miseducation of Lauryn Hill\",\n                        \"artist\": \"Lauryn Hill\",\n                        \"price\": 29.98,\n                        \"genre\": \"Neo Soul\",\n                        \"tags\": [\n                            {\n                                \"tagName\": \"Female empowerment\"\n                            },\n                            {\n                                \"tagName\": \"Heartbreak\"\n                            }\n                        ]\n                    }\n                }\n            ],\n            \"totalPrice\": 105.98\n        }\n    ],\n    \"pageNumber\": 1,\n    \"pageSize\": 10,\n    \"totalRecords\": 2\n}"
+						},
+						{
+							"id": "702a57ab-a2a3-4c07-9a6c-0b6116b8f3d0",
+							"name": "Paginated response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Sales?PageNumber=2&PageSize=1",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Sales"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": "2",
+											"description": "Specifies which page to return, defautls to the first page.",
+											"type": "text"
+										},
+										{
+											"key": "PageSize",
+											"value": "1",
+											"description": "Defines how many items can be shown on one page, max is 50.",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Sun, 12 Apr 2026 00:04:15 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"saleId\": 7,\n            \"soldItems\": [\n                {\n                    \"quantity\": 2,\n                    \"item\": {\n                        \"itemId\": 1,\n                        \"format\": \"Vinyl\",\n                        \"type\": \"Album\",\n                        \"name\": \"Good Kid, m.A.A.d City (10th Anniversary Edition)\",\n                        \"artist\": \"Kendrick Lamar\",\n                        \"price\": 38,\n                        \"genre\": \"Hip-Hop\",\n                        \"tags\": [\n                            {\n                                \"tagName\": \"West Coast hip-hop\"\n                            },\n                            {\n                                \"tagName\": \"Conscious rap\"\n                            }\n                        ]\n                    }\n                },\n                {\n                    \"quantity\": 1,\n                    \"item\": {\n                        \"itemId\": 2,\n                        \"format\": \"Vinyl\",\n                        \"type\": \"Album\",\n                        \"name\": \"The Miseducation of Lauryn Hill\",\n                        \"artist\": \"Lauryn Hill\",\n                        \"price\": 29.98,\n                        \"genre\": \"Neo Soul\",\n                        \"tags\": [\n                            {\n                                \"tagName\": \"Female empowerment\"\n                            },\n                            {\n                                \"tagName\": \"Heartbreak\"\n                            }\n                        ]\n                    }\n                }\n            ],\n            \"totalPrice\": 105.98\n        }\n    ],\n    \"pageNumber\": 2,\n    \"pageSize\": 1,\n    \"totalRecords\": 2\n}"
+						}
+					]
+				},
+				{
+					"name": "Post Sale",
+					"id": "551b6458-b1fc-45e8-bdb4-59132d2c4698",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"itemId\": 0,\r\n    \"quantity\": 0\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/api/Sales",
+						"description": "This request sends a Post request to the API. The JSON body accepts a list of a CreateSaleItemDto model, which includes the itemId and quantity properties. The itemId property represents the item's ID value within the database, and the quantity property represents the quantity of that item being bought, which allows for multiple purchases of one item within the same sale.\n\nThe json uses a list to allow the passing through of multiple individual items to be stored within one sale record.\n\nThis request expects a returned status code of 204 NoContent after a successful post request, or a 404 NotFound when the item's ID is not found within the database, or has been deleted."
+					},
+					"response": [
+						{
+							"id": "1a05439f-33c3-45b2-b244-09dc622c22a5",
+							"name": "204 NoContent",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"itemId\": 1,\r\n    \"quantity\": 2\r\n  },\r\n  {\r\n    \"itemId\": 2,\r\n    \"quantity\": 1\r\n  }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/api/Sales"
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 204
+								},
+								{
+									"key": "date",
+									"value": "Sun, 12 Apr 2026 00:15:57 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						},
+						{
+							"id": "74975254-996b-42c2-9e92-5a5de31d5682",
+							"name": "404 NotFound",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"itemId\": 0,\r\n    \"quantity\": 0\r\n  }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/api/Sales"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 404
+								},
+								{
+									"key": "content-type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Sun, 12 Apr 2026 00:16:53 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-f19ffa5ce3b0f11099c088c8785af36c-b255750a4335c961-00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Sale",
+					"id": "42d72fd9-44b0-4b32-8f15-555dd63e993a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/api/Sales?saleId=999",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"Sales"
+							],
+							"query": [
+								{
+									"key": "saleId",
+									"value": "999",
+									"description": "Dictates which item will be deleted"
+								}
+							]
+						},
+						"description": "Sends a Delete request to the API using the sale ID passed through the parameters. All deletions are soft deletes for record viability preservation.\n\nThis request expects a returned status code of 204 NoContent after a successful deletion, or a 404 NotFound if the ID is not in the database, or has already been deleted."
+					},
+					"response": [
+						{
+							"id": "1732ce3c-c762-4b1b-b719-bd61f00eee9c",
+							"name": "204 NoContent",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Sales?saleId=9",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Sales"
+									],
+									"query": [
+										{
+											"key": "saleId",
+											"value": "9",
+											"description": "Dictates which item will be deleted"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 204
+								},
+								{
+									"key": "date",
+									"value": "Sun, 12 Apr 2026 00:21:12 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						},
+						{
+							"id": "700c3b64-7b77-4719-957a-90712ebaaa25",
+							"name": "404 NotFound",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/Sales?saleId=999",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"Sales"
+									],
+									"query": [
+										{
+											"key": "saleId",
+											"value": "999",
+											"description": "Dictates which item will be deleted"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 404
+								},
+								{
+									"key": "content-type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Sun, 12 Apr 2026 00:22:29 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-38c7136fd6bc7934c58979fb00285b21-12953d64324a3541-00\"\n}"
+						}
+					]
+				}
+			],
+			"id": "762e118d-bb66-43d8-98ca-841ce19e4c3d",
+			"description": "This folder contains all the API requests pertaining to the E-Commerce site's sales, including Get, Post, and Delete requests."
+		},
+		{
+			"name": "Export",
+			"item": [
+				{
+					"name": "Get Exported Data",
+					"id": "3267531b-a714-425f-bf96-3f55314928b3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/api/export?FileType=",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"export"
+							],
+							"query": [
+								{
+									"key": "FileType",
+									"value": "",
+									"description": "The file type to export to.",
+									"type": "text"
+								}
+							]
+						},
+						"description": "Sends an export request to the API and returns a .pdf, .xlsx, or a .zip file containing multiple .csv files.\n\nTakes a parameter of file type, accepting either \"pdf\", \"csv\", or \"xlsx\".\n\nExpects a 200 OK response containing the file, or a 400 BadRequest response when attempting to export to an unsupported file type."
+					},
+					"response": [
+						{
+							"id": "982904b9-8aa6-409f-b754-0edc0f89b6e3",
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/export?FileType=xlsx",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"export"
+									],
+									"query": [
+										{
+											"key": "FileType",
+											"value": "xlsx",
+											"description": "The file type to export to.",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 200
+								},
+								{
+									"key": "content-type",
+									"value": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+								},
+								{
+									"key": "date",
+									"value": "Sat, 16 May 2026 21:59:37 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "content-length",
+									"value": "8631"
+								},
+								{
+									"key": "content-disposition",
+									"value": "attachment; filename=export-data.xlsx; filename*=UTF-8''export-data.xlsx"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000r��\\g�\"\u0015\u0001\u0000\u0000\u0018\u0002\u0000\u0000\u000f\u0000\u0000\u0000xl/workbook.xml���n�0\u0010�_��{q\b��\"\f\u0017.\\*$��l�\r��O�u �_%���\u001ez[��\u001d�j38�.\u0018�\u0004/`>+��WA\u001b\u0012Ч��\u00036��P]C<\u001fC8��YOU\u0014Ц�U��j�I��\u000e��l\u0013���f!�xh\u001a�p\u001bT��'^\u0016�\u001b�he2�Sk:����\u001f7�\"JM-br�f���G���O�P@�\u001a��\u0000�n\u001c�\f^)��\u0005kL�t\u0018�\u0005\u0014��J悵\n<N/�^�_��91?�\n    <H�\u0004lZ���9�X\u0019- �tyϐ��1�^�\u001c)3d�\u0007R�S._d��G�g8����B�楤UcMҪ)a�|/�\u000f�Q��\u0007PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000r��\\�xC�x\u0001\u0000\u0000\u0006\u0004\u0000\u0000\u0010\u0000\u0000\u0000docProps/app.xml���n�0\f�_�սq�\u0006�f�*���.ی%�\u0003+ӉPY\u0014(�p��.��4\u0001z��\u000f�~�vy3t.둣%_�\u000f����\u001bj�_Vj-��'u�K\bE�\u0014��b̆��X�R��H(�<�\u0015v\u0010'\u0014�\u000f�k�;�8!^�Զ��\u001d�u�^���uސ\u0019m�a�\u001c0�\u0017\u001f���p\u0010�\r6�a�Q�̷!8k@,y��\u001a�H�d��AW�\u0007��_Xq\u0018�5�D]�R�h�8{��c�J�\u0010�U\u0016�\u001f��g��T�sp\u0018�|{�uj�fm�xs\u0001��仨�z�}�\bg�M��\t��\u000e�\u0013�1�9�\u001e�ڔo���.\u000ef\u000f���0~�5X~c\u0019=�\u0005/��1۬㥺\u0017�\u0017�S\\!��\u0004�c���L_%��N�\u001b�w��~�_\u001eyɷ��>~��h�\u001f\u0004���\u001c͚�<�iB�+#17��\u000bS�-������q�C�PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000r��\\����I\u0001\u0000\u0000�\u0004\u0000\u0000\u0014\u0000\u0000\u0000xl/sharedStrings.xml���J\u0003A\f�_%���V�m�\u0001��E)�E��۴;t\u000e�$�۷�mA\u0004��M��K2���xV;\u000b\u0007�l��$�4O�|\u0011��o'�^6�A2���\u0011�@���Q=IJ�j�e\\���P���݄�P8\rq�q\u0015\t�\\\u0012��Y/���C�S+�D���%X܎����3����a!�X�X\u0005A\u000b��\u0014���/ߠ��\u0005��\u0018\u001c�Be\u0010j�i��|�\u000e����˫t8�`��E�M\u0014â*5bU�w'���c��C>�p�[��V�\u001fɯ�)v��\u000ec��\u001az5�hU����i��T�2T\u001a�=�\u0014AJ�y$��\u000e�m��%�,�\u0007�@\u0011�\u0005��\u0017P\u0004υ\t{����\u0015�\u0015�\u001e�\u001c���e�\u001a�D�V�|T���\u0006u��`�~\u0002PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000r��\\��\u0017�\u0002\u0000\u0000�\r\u0000\u0000\r\u0000\u0000\u0000xl/styles.xml�Wmk�0\u0010�+B��-�CWF�[��@�tc�`_e�lk=IF��N�Ћ�4\u001b�\u0002]G����'��N绳|r6(d+��4:��,�\fti*���/�~󎟝�\f�=�\u0011�[\u0000b�B�\u001f\u000f9o���$��\u0016��g�\u0003=(��U����M�w\u0016D�;��d��G�\u0012Rs�Q/�BQ�J�Ԕ��\u0016��rQ�<�,8\n        <7\u0015䜳�f���C�W\u0007�\u000f\u000e�Y�zF2m�صѻ�:ȭ+��\u001ee��J`�\u000b�\u0003J\rq��>�Y\u0016�Ҡ��6E�\u0017����\b��`|.P\u0016VF�\u0016J�:�3\u001fc\u001bw\u001f�\"���`�\u0010�%\u0011w�%\u0011��\t\"�z!\u0011Y�o�\u001d�\\�\u0018h�1�#��b���>�E�GR\u0018[��b��\u0006d�\u0014��\u0002�v�jF����\u000ep�\b51_�1�ߥ-\t���ʦ݋�\tΆL�\u000f�L\u0017NDd�>��pF��a���ʥsK��/\u0001��y�VO�?�~�z�]�$J�(\u0006WQ\u0011]�뫥*�.|ϺG\u0019PW\u0014\u001b�gm8�\u001b\u0014�g\u001f���\u0010�\u0014Ɨ\u000f��\u0010���\u00057\u001e8keU���x��)�8E�m�[�Ϟy��C��ö\u0018��1:d���b4b����hr��\u00064X���\u000bH�����\u000bg\u0004\u0003}1$����;+�\u001b\u0018�+RW~Ô3\u000b(H��b\u0003}_�$�����Rj�X�Z�oo�B�4�\u001e���$O��/�~�|��\u0004z��?��|�G�&q�o\rw?�w.�\u0013��E;�WnP�V�\u0017K�$uԂ��3�n��N\u0000PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000r��\\��7!�\u0002\u0000\u0000�\u0006\u0000\u0000\u0018\u0000\u0000\u0000xl/worksheets/sheet1.xml���n\u00131\u0010�_��=�S\u0013ڨ[�\u0016!�@�\u0000����Z�=��7\u0007^�\u000b\u001e�W@�7��\u0006ԫ�~����q~��u�fg4�\u00009����,�\f��F�u�\u0007߾:��ya\u001b��B��������r���:\u0000�vF[���w���,s�\u0003#�\f{�;�[$#��!�3l[%�-����Y�狌@\u000b�кN���n��L�g�FIB���I4�Y�z\u0002�D\u0014���Ev�\tə��\u000fk�$V\u001aj\u001e\u001d\u000f�F���\bz\u0018�W\u0012M/�Z)��>2\u001f)_��o�\u0019�,\u000f�\u0018��\u0014>q�ZY�'�\u0006c\u0004�o@��\u0005?$>�u�c\"���&�\u001be��\u00162�����򶊲Q�M��M\"\u0016��B|\b������v��]��=�\u0006Z1h�\u0019��a���u$�@�fF��ę\u0011���U��j���.�E9\u000f7j\u001fz�s&\u0007��|O���G\u001e��Q\u001e=�jv>���˗�T�Iu4)�YQ]\u0014\u0017��Iq�$���x\u000eo�\u0017! �2J��u5/�\u0015g.r&�tbA\u0012Q���8H|�]�o��Pc�*\u001d�7���)�mRV\u0013e9Qf\u0011�\u0011u9���\u0017��4�S��y\\�:\t���Dy���\u001f`�\u0004�<\tv�<.7?\tV�\u0000[�\u0004˞t�'e�]\u001f�*�!�\u001fh�з`=\u0010�\u0011�\u0000y%�$;\u0010�=M�kR�Ge!E��b\r�\u0004��uLC�k��^�9�4b)��\u001f>W�=�\u0010͓9�\u0018��>\u0005Aw4�\u0002~�Y/z�/�G��N�x�󜳠��h���~���m�8CR`}|�k>\u000e?g+-�õm�wʧ\u0001lHDl�$h}�&<��\u0016-p\u0006DH��r�\u0016{hF���.2��\u000fo�� ���&�4�����?PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000s��\\��z{�\u0003\u0000\u0000w\r\u0000\u0000\u0018\u0000\u0000\u0000xl/worksheets/sheet2.xml���n�8\u0010�_��}��|@�\"N��@�\u0004�b{MS�E�\u0007��O}�^���\u0015\u0016$e�J��A��!~}\u001c�3�����y���\u0019�\u0011��\u0014\r�&)\u0004D`�R�i�֬�� �\u0006�\u00161)H\u0003�D���\u0017��^�'�\u0011b��3�\u0017���1�\"I4�\bGz\"{\"\u000e������T�D��\u0014�\u001b���\b��iZ'�0d�\u0014����\u0003퐕\b�F�\u0014+���L��\u0003,ѽ\"�u�pf��d� \f\u0001ǋO\u001b!\u0015Z1�@G<�9�ɖ#����a�{d�2j�.�s�1���\u0013����D�����\u001aF\u0005yP@o9G�$L�\u001b����#�t�-$�\u0017���r\"l\t�\"�\u0006^e����\u0006տ���(\u0002�~+)�l�m`:_�u�yP�%k�e�Q��Ȑ�i\u001f,�{\u0001K\u00068��\u0004\u0001G\u0007�����\u001a8�T�tZ��:ښ�\u0010�6��\u0002�_\u0018���ό��̪����b�\u0014ϐb�\u0015�l^�C�\u0001R��i��Q�\u0019��\u0019���όٛ�2\u001d\u0018�3��&�,O�2\u001e2\u001b �3�zy�,�H�{�5�\r2�\u0006J����#�\u001b�-,�\u0015�c|\u001bZ��Ī����4P�������;��ːr\u0016R^����&��Ґ�CP����Ai\u001e�~\fJ����K���\u001cI\u0013W�_������]�=2P�~�4�����Ai\u001dt<(\r\u0016�CP\u001a��mP\u001a,�ǐ4\u000f���K�������+�\u0017#Ã��,B�\u0005ks\u001d�\u0006�7E��E��E��E��E������+��#ǃ�Բ�o�2���x��x��x�CҼ\f:^��ūW\f�F�\u0007�[V�-^ŷx\u0015ox\u0015ox\u0015ox0�`\u001fٱ.�œ\u0017������n�\u0006�T��\u0014\u0006�k\"\fQď�;�\f�/\u0016;��}���Q��L\u0005�\tz�!_��P�\u0001#k��t2� P~D���q%���F��\u00135\u0004k)�\u000f��\f�J̶\u0007=��J���Bc�f�4��j�ôr/�鈸�\u0011\u0005�T�\b�\u0017\r\u001c�W\bV\f�+�~��N��K\u001b\u0002L\u0018���^Ot\u0003�\u0014\u0004\u0002��T��-�=CG�\u000e���o]�~�ػ�\u0003RF\u0003,��#��s�/]�\u000fPK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000s��\\�̦\u0000�\u0002\u0000\u0000h\u0006\u0000\u0000\u0018\u0000\u0000\u0000xl/worksheets/sheet3.xml���n\u00131\u0010�_��=�CҴ��E=\b�\u0004jU\u0010\\;�٬U۳\u001a{s�ո��x\u0005d{\u0013X\b�W�\u0019����c�ǷwF�\r�Sh+^Lr��J��]W��ͫ\u000bΜ\u0017�\u0016\u001a-T|\u000f�����-�HO�\u0005�lg�uK�x�}��2'[0�M�\u0003�3�A2»\t�:æQ\u0012�P�\u0006���<�g\u0004Zx�ֵ�s|p�\u00153!�r4J\u0012:l�D�\u0019�2�\u0011�:F1:X.�E&$gF.߭-�Xi�xt<�\u001b���F�S߽�h:��Ji��1�1�K\\��7όP���\u0018�\u000f\u0014\u001e��ZYx �zc\u0004�o@��\u0005?4\u001eպ���]]f��ke��-d\u0004Mů���,�\u0006�g\u0005[7�Xؿ\u0015�S(��\u0015�G��\u0017���<\u0010��\u0011����}\u000bC���#Q�\u0017$jfT�%Ό��߭�}[����(�Y��}ؓ�3�;��K\u0012����Q\u000e\u001e�ѣ8�,\u0016��t�\u001f��W���;�E(\b���W�u\u0015/�%g.\"�MZl��(A}]\u001c$��.�7W�<@6\tu�ޜ����Y��[�r��\u00176%�\u0007��$�\u0019�.��M����x�I��\u0014o�\n            <o�\u000f�lě���N��I^��^w�������Z$�\u0015�\u0017�\u0016�\u0007�4�\u001b ��\u001f�\u0016D�\u0000\u0013wM�~�,�*�g'��A�ZY�44������3Jg\"\u0015\u001e���\n�G\u0013��d\u000e4\u0014\r�OE�\u001d�?��;։\u000e��\ni^�\b�^�9gAsOѦƭ�Ԃ��\u0000q����x�V|8�����O׶��*�NLM\"��L�ַh�}�*n�\u0002g@��*^+�i��z������SǇ��A�wLbo�e:~�?���PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000s��\\`L���\u0005\u0000\u0000�\u001b\u0000\u0000\u0013\u0000\u0000\u0000xl/theme/theme1.xml�Y�o�6\u0014�W\b�WK��$�ZĎ�nM� �:��,�\u0012\u001b�\u0014H:�oC{\u001c0`X7�2`�\u001d�m\u0005Z`����a��\u000b\u0003)Y�l�u�\u0014۰�`�����G򉒯�8�\u0019:&RQ�=�^q0\"�\u0017\u0001塇�z��\u0006�q�\u001al��\u0004�ƌ�-�p�u��h(?\"1�+\"!�4f\u0013!c�ꊐa#�pBy\u0018�F�q��\u0018(ǈCL<|w2�>A#c\u0012��\u0007�Ąke\u0006|&\u000f�iRbXlp�\u001f5S}&�10\u000f�P\u001e��\u00119�\u00181P�Ϥ�\u001d���q�Z#g1]C.\u0010��3'f��i�2\u001c�Lw�޼��P�\b�W����?p\u0017\u0016-\u0002|��̝\"�=�p{��\u0002*m�Z�;\u001d��D((�V\b��^��Y&XT�l�\u00106�n{�Y&XT��������e�E���\naxu��^\"XT�(?Z���]LQ��\bv�\u0012��8�F�\u0016\u0016�Fa��\u0006��[w1<\u0010r(���\f�r�g\t��O<܇x,)X\u0005�\"P����ju��!�K�h\u000f�\u0000�\u0005̫�߿z�\u0014�z���ᳳ�?�=zt���*�-�a��������c���o^>������_�䗟?�A�\"�ŗO~{���W�����*���q\u0011?�1Q�\u000e9A\u0007\"6�UH��<'e\u0014\u0001-Q \u00121T!\u0007:*!�̀U\u0002{���{��\u0012ys����a$��V!oGq\t�'\u0004�\tY\u001d�m+W�i��\u001a}9-\u0002\u000f\u0000�+��K�<�&\u0011��EZ�F���>\u0003�!$�hd��#B�x�)-�w��R(1��>E=�Չ\u0019ѱ�fݢ10�U�8�����{�'X��\u000e9.C���*�\u0012V��M�j�����\u0015����JG\u000fg�/%^i\t<$L�A@��$ݕ&�\u0005�60Z�\u0002��,.C��G��]\u0010�\b�\u0011G�\b��oʣ\"�}u$\u0004\u0003�/t�\u001f��gL_0\n�~��Q�Ϲ�?�aT�X̕��W�R}�)]�ft,��]\u0016�y^�%��$�%�\u0016�\u001f-�;0���,�˺|Y�/��kv���xQ�\u001b�s�5\u0018�\u001e�'��C=cdW�ҭ\u0004���2f;��\u001fꓨ�r�\u00120�`�H\n�\u0011��a\u0004\t�k%B��\u000e\u0015J��k��gS�u:��\u001f(aK��\u0013A:�*=i�l/TE��1��\\���ʹ)rM=�S��y�^��SF9\u0002����637�\u000f�\u0004&�����\\�L�\b\u0002�M�[\u001d��Z7w�q}�����3WE�v�`�\"&�Y�����d��C'\u001e��4;\u0018��xx�@c��I�ae���B�a_gѼqo/�\\�@]�>�H\"��\u0001\u0015�4{))�\u0017!4;mc�bb��Ok���p�Q?\u001a�3L&\u0013�뚑E7�&����(8Ac6�\u0007\u0010x�,Z\u0007��*���#=l2n{�:���W?�>\u0001�D��(�]�\u0018S�m�N�^��F��3��\u0005���?�b�/�\u0015ؗf\u0010\u0013\tȬS\u000f\u000b�#\u0011JH\"�\u000f��ڊI�\u0011\u0003mK\u00163�����P�R#i�\u000b#}@C$i�a\u001dIB�u\u0016�\u001b���\n�m��RVqr�U����1a#���&\u0005\u0018EyY�ra��\u0013W�g�\u0018���([;�>6,�R\u000b��\u0015o\u0002�{���zq�\u001bpV�V\u0004���o�\t�\b�/\u000f�T�lq\u0006\u001e�\u0003�k�8tj\u000f��\u001eI�ٖik�a7\u001bL匭w{�ZL�B�]\u001eO\u000b\u0019o�e�Y�|z��g�R�K�\"ߍ�\rkNN�G\u001e�[��K�\u001f\u0010_�\tL�V�{�S-�?�wbW�LӒ��\u0005PK\u0003\u0004\u0014\u0000\u0000\u0000\u0000\u0000s��\\�\u0000�:�\u0001\u0000\u0000�\u0001\u0000\u0000Q\u0000\u0000\u0000package/services/metadata/core-properties/20d691e3dd7f4439b05cf1c71fc792de.psmdcp﻿\n                <?xml version=\"1.0\" encoding=\"utf-8\"?>\n                <coreProperties xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.openxmlformats.org/package/2006/metadata/core-properties\">\n                    <dcterms:created xsi:type=\"dcterms:W3CDTF\">2026-05-16T21:59:38.2096859Z</dcterms:created>\n                    <dcterms:modified xsi:type=\"dcterms:W3CDTF\">2026-05-16T21:59:38.2100079Z</dcterms:modified>\n                </coreProperties>PK\u0003\u0004\u0014\u0000\u0000\u0000\u0000\u0000s��\\2 ���\u0002\u0000\u0000�\u0002\u0000\u0000\u000b\u0000\u0000\u0000_rels/.rels\n                <?xml version=\"1.0\" encoding=\"utf-8\"?>\n                <Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">\n                    <Relationship Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"/xl/workbook.xml\" Id=\"Rb4cecd060baf49af\" />\n                    <Relationship Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties\" Target=\"/docProps/app.xml\" Id=\"rId1\" />\n                    <Relationship Type=\"http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties\" Target=\"/package/services/metadata/core-properties/20d691e3dd7f4439b05cf1c71fc792de.psmdcp\" Id=\"R1e7efe8c5a204461\" />\n                </Relationships>PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000s��\\\f��\t�\u0000\u0000\u0000�\u0003\u0000\u0000\u001a\u0000\u0000\u0000xl/_rels/workbook.xml.rels��=j\u00031\u0010\u0005ૈ�Z�\u0013c�e7i�:��؝����4�峥ȑr��\r�(�H��F�\u0013<>f��׷ͮ8�^0e\u0013��E�\u0002C߇�x%�L��\u001av��\u0001�$\u0013|�&fV��Y�&����^���\t\u0011}qv\f�I�MH�Gٟ�B޵튧�\u001dPw��5�\u001a�8�\u001e�Bv��b��L8\n                <S2^e`G�\u0014�\u0000^l��\u0014g��\u0007\u0001i?<\u0000���j�7e�*�jN�%�SֈT3��Ϲ!Ң\u0012u7 �*��\u0006D�Jt?��4:�5S����ZO\u0010^]��\u0003PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000s��\\Qa-BB\u0001\u0000\u0000I\u0005\u0000\u0000\u0013\u0000\u0000\u0000[Content_Types].xml͔�J\u00031\u0010�_e�U6i+�H�=�W-�\u000b�d�\u001b��L���<�H��4�*R,ڂ^2����&\u0003y}~\u0019O��\u0015 �\u0014\u001b1�\u0003QA4ɺ8oĒ��RL'��u\u0006���#5�c�WJ�� h�)C�o\u0013\u0006�$\u0013�U�f��F���2)2D�y�!&�\u001bh��su�3�-�\u000f^T�۾\r�\u0011:g�f��ZE�\u0005R��u\u0006l2�\u0000�%e\u0004m�\u0003��e�2h\u0017�J����\u0014��?þ�%MB�3�\f�\u000e�;\f���A\u0010|���\u000f��\n\u0010��j���t�F(��\fS&�s�Ǿ%l�-�}���^Q�\u0011�\u0003��s��^��\"��pr�\u0012z\b��pQn�*exb�]�OEF�E���D��\u0000������\u001dQ��q�\u0006PK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000r��\\g�\"\u0015\u0001\u0000\u0000\u0018\u0002\u0000\u0000\u000f\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000xl/workbook.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000r��\\�xC�x\u0001\u0000\u0000\u0006\u0004\u0000\u0000\u0010\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000B\u0001\u0000\u0000docProps/app.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000r��\\����I\u0001\u0000\u0000�\u0004\u0000\u0000\u0014\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0002\u0000\u0000xl/sharedStrings.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000r��\\��\u0017�\u0002\u0000\u0000�\r\u0000\u0000\r\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000c\u0004\u0000\u0000xl/styles.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000r��\\��7!�\u0002\u0000\u0000�\u0006\u0000\u0000\u0018\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u000e\u0007\u0000\u0000xl/worksheets/sheet1.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000s��\\��z{�\u0003\u0000\u0000w\r\u0000\u0000\u0018\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\n\u0000\u0000xl/worksheets/sheet2.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000s��\\�̦\u0000�\u0002\u0000\u0000h\u0006\u0000\u0000\u0018\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\r\u0000\u0000xl/worksheets/sheet3.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000s��\\`L���\u0005\u0000\u0000�\u001b\u0000\u0000\u0013\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0010\u0000\u0000xl/theme/theme1.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\u0000\u0000s��\\�\u0000�:�\u0001\u0000\u0000�\u0001\u0000\u0000Q\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0016\u0000\u0000package/services/metadata/core-properties/20d691e3dd7f4439b05cf1c71fc792de.psmdcpPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\u0000\u0000s��\\2 ���\u0002\u0000\u0000�\u0002\u0000\u0000\u000b\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0018\u0000\u0000_rels/.relsPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000s��\\\f��\t�\u0000\u0000\u0000�\u0003\u0000\u0000\u001a\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u001b\u0000\u0000xl/_rels/workbook.xml.relsPK\u0001\u0002\u0014\u0000\u0014\u0000\u0000\u0000\b\u0000s��\\Qa-BB\u0001\u0000\u0000I\u0005\u0000\u0000\u0013\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u001c\u0000\u0000[Content_Types].xmlPK\u0005\u0006\u0000\u0000\u0000\u0000\f\u0000\f\u0000L\u0003\u0000\u0000U\u001e\u0000\u0000\u0000\u0000"
+						},
+						{
+							"id": "7b31eca9-56b1-4409-8782-9bc8e2fad233",
+							"name": "400 Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/api/export?FileType=unsupported file type",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"export"
+									],
+									"query": [
+										{
+											"key": "FileType",
+											"value": "unsupported file type",
+											"description": "The file type to export to.",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": ":status",
+									"value": 400
+								},
+								{
+									"key": "content-type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Sat, 16 May 2026 22:00:05 GMT"
+								},
+								{
+									"key": "server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "File type is not supported. Supported file types include pdf, csv, or xlsx"
+						}
+					]
+				}
+			],
+			"id": "dcd3a266-3b9f-4b02-9d70-0d451dafca52"
+		}
+	]
+}
