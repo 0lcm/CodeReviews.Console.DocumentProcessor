@@ -14,9 +14,9 @@ internal static class Utils
         sb.Append($"{baseUrl}?PageNumber={pageNumber}&PageSize={pageSize}");
 
         if (!string.IsNullOrWhiteSpace(searchTerm))
-            sb.Append($"&SearchTerm={searchTerm}");
+            sb.Append($"&SearchTerm={Uri.EscapeDataString(searchTerm)}");
         if (!string.IsNullOrWhiteSpace(searchGenre))
-            sb.Append($"&Genre={searchGenre}");
+            sb.Append($"&Genre={Uri.EscapeDataString(searchGenre)}");
         if (searchTags != null && searchTags.Any())
         {
             for (var i = 0; i < searchTags.Count; i++)

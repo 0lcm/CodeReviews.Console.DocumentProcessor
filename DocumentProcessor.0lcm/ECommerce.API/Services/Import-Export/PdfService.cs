@@ -10,7 +10,7 @@ using Path = System.IO.Path;
 
 namespace ECommerce.API.Services.Import_Export;
 
-public class PdfService(IConfiguration configuration) : IExportService
+public class PdfService() : IExportService
 {
     public async Task<MemoryStream> ExportDataAsync(ApiDbContext db)
     {

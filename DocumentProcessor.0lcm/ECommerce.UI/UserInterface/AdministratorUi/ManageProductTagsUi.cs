@@ -10,7 +10,7 @@ namespace ECommerce.UI.UserInterface.AdministratorUi;
 
 internal class ManageProductTagsUi(ITagService tagService)
 {
-    private readonly UiHelper _uiHelper = new(tagService);
+    private readonly UiHelper _uiHelper = new();
 
     //------- Menu Methods -------
     internal async Task ManageProductTags()

@@ -57,44 +57,42 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-using (var scope = app.Services.CreateScope())
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
+var importFactory = scope.ServiceProvider.GetRequiredService<ImportServiceFactory>();
+var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+var dbDirectory = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+    "ECommerce");
+Directory.CreateDirectory(dbDirectory);
+
+var isFirstRun = !await db.Database.CanConnectAsync();
+var shouldSeed = true;
+if (!isFirstRun)
 {
-    var db = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
-    var importFactory = scope.ServiceProvider.GetRequiredService<ImportServiceFactory>();
-    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-    var dbDirectory = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "ECommerce");
-    Directory.CreateDirectory(dbDirectory);
-
-    var isFirstRun = !await db.Database.CanConnectAsync();
-    var shouldSeed = true;
-    if (!isFirstRun)
-    {
-        shouldSeed = (!args.Contains("--skip-tag-seeding") && !await db.Tags.AnyAsync())
-                  || (!args.Contains("--skip-item-seeding") && !await db.Items.AnyAsync())
-                  || (!args.Contains("--skip-sale-seeding") && !await db.Sales.AnyAsync());
-    }
-
-    await db.Database.MigrateAsync();
-
-    if (isFirstRun || shouldSeed) await DbSeeder.RunSeederAsync(db, importFactory, logger, new SeedingOptions
-    {
-        SkipSeeding = args.Contains("--skip-seeding"),
-        SkipItemSeeding = args.Contains("--skip-item-seeding"),
-        SkipTagSeeding = args.Contains("--skip-tag-seeding"),
-        SkipSaleSeeding = args.Contains("--skip-sale-seeding")
-    });
+    shouldSeed = (!args.Contains("--skip-tag-seeding") && !await db.Tags.AnyAsync()) 
+                 || (!args.Contains("--skip-item-seeding") && !await db.Items.AnyAsync())
+                 || (!args.Contains("--skip-sale-seeding") && !await db.Sales.AnyAsync());
 }
+
+await db.Database.MigrateAsync();
+
+if (isFirstRun || shouldSeed) await DbSeeder.RunSeederAsync(db, importFactory, logger, new SeedingOptions
+{
+    SkipSeeding = args.Contains("--skip-seeding"),
+    SkipItemSeeding = args.Contains("--skip-item-seeding"),
+    SkipTagSeeding = args.Contains("--skip-tag-seeding"),
+    SkipSaleSeeding = args.Contains("--skip-sale-seeding")
+});
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.MapControllers();
 app.UseExceptionHandler(error => error.Run(async context =>
 {
     context.Response.StatusCode = 500;
     await context.Response.WriteAsync("An unexpected exception occurred during runtime.");
 }));
+app.MapControllers();
 
 app.Run();

@@ -7,7 +7,7 @@ using static ECommerce.UI.Helpers.DisplayHelper;
 
 namespace ECommerce.UI.Helpers;
 
-internal class UiHelper(ITagService tagService)
+internal class UiHelper()
 {
     internal static Table BuildItemTable(PagedResponse<ItemDto> response)
     {
@@ -104,9 +104,9 @@ internal class UiHelper(ITagService tagService)
                 DisplayWarning("An error has occurred with one or more of the arguments you have entered, " +
                                "please check that any details you enter are correct before trying again.");
         }
-        else if (ex is NotSupportedException notSupportedException)
+        else if (ex is NotSupportedException)
         {
-            
+            DisplayWarning("This action is not supported.");
         }
         else
         {

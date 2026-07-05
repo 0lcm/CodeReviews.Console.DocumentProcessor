@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.API.Services;
 
-public class ItemService(IItemRepository repo, ITagRepository tagRepo) : IItemService
+public class ItemService(IItemRepository repo, ITagRepository tagRepo, ILogger<ItemService> logger) : IItemService
 {
     public async Task PostItemAsync(CreateItemDto itemDto)
     {
@@ -101,6 +101,7 @@ public class ItemService(IItemRepository repo, ITagRepository tagRepo) : IItemSe
         }
         catch (Exception)
         {
+            logger.LogError($"DeleteItemByIdAsync Item with id {itemId} failed.");
             return false;
         }
     }

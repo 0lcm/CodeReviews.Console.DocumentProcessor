@@ -11,8 +11,8 @@ public class XlsService : IImportService
     public SeedData GetSeedData(IEnumerable<string> filePaths)
     {
         var filePath = filePaths.First();
-        var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-        var workbook = new HSSFWorkbook(stream);
+        using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        using var workbook = new HSSFWorkbook(stream);
 
         var tags = GetTags(workbook);
         var items = GetItems(workbook, tags);

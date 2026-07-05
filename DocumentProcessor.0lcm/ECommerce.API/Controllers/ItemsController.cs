@@ -17,7 +17,7 @@ public class ItemsController(IItemService itemService) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PagedResponse<Item>>> GetItemsAsync([FromQuery] PaginationParams paginationParams)
+    public async Task<ActionResult<PagedResponse<ItemDto>>> GetItemsAsync([FromQuery] PaginationParams paginationParams)
     {
         var pagedResponse = await itemService.GetItemsAsync(paginationParams);
         if (pagedResponse.TotalRecords == 0) return NotFound();

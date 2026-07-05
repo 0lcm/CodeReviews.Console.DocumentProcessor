@@ -29,8 +29,8 @@ public class SalesController(ISaleService saleService) : ControllerBase
         return Ok(pagedResponse);
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> DeleteSaleAsync([FromQuery] int saleId)
+    [HttpDelete("{saleId:int}")]
+    public async Task<IActionResult> DeleteSaleAsync(int saleId)
     {
         var success = await saleService.DeleteSaleByIdAsync(saleId);
         return success switch
